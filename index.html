@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UVM Animaciones</title>
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+  <!-- Tu CSS personalizado -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="animate__animated animate__fadeInDown">
+    <img src="images/logo-uvm.png" alt="Logo UVM" width="200" />
+    <h1>Bienvenido a UVM</h1>
+  </header>
+
+  <section class="animate__animated animate__zoomIn">
+    <video width="640" controls autoplay muted>
+      <source src="videos/video-uvm.mp4" type="video/mp4">
+      Tu navegador no soporta videos HTML5.
+    </video>
+  </section>
+
+  <section class="animate__animated animate__fadeInUp">
+    <h2>Carreras y Lugares Disponibles</h2>
+    <table>
+      <tr>
+        <th>Carrera</th>
+        <th>Grupos</th>
+        <th>Alumnos/Grupo</th>
+        <th>Lugares Disponibles</th>
+        <th>SEDENA</th>
+        <th>SEMAR</th>
+      </tr>
+      <tr>
+        <td>Ingeniería</td>
+        <td>3</td>
+        <td>25</td>
+        <td>10</td>
+        <td>✔</td>
+        <td>✖</td>
+      </tr>
+      <tr>
+        <td>Medicina</td>
+        <td>2</td>
+        <td>30</td>
+        <td>5</td>
+        <td>✔</td>
+        <td>✔</td>
+      </tr>
+      <tr>
+        <td>Derecho</td>
+        <td>1</td>
+        <td>20</td>
+        <td>8</td>
+        <td>✖</td>
+        <td>✔</td>
+      </tr>
+    </table>
+  </section>
+
+  <footer class="animate__animated animate__fadeInUp">
+    <p>&copy; 2025 Universidad del Valle de México</p>
+  </footer>
+
+</body>
+</html>
