@@ -3,14 +3,14 @@ const DATOS = /*DATOS_INICIO*/{
  "titulo": "Aparta tu lugar en UVM",
  "actualizado": "24 de octubre de 2026",
  "logos": [
-  "imagenes/descarga-1-.png"
+  "imagenes/Logo UVM.jpeg"
  ],
  "avisos": [
   "<strong>Promociones y descuentos exclusivos<\/strong> para el turno matutino.",
   "Si se aparta lugar o hay promesa de pago, el alumno tiene <strong>una semana<\/strong> para liquidar o generar el pago acordado."
  ],
  "mostrarVideo": true,
- "cicloInicial": "Febrero 2027",
+ "cicloInicial": "Agosto 2027",
  "ciclos": [
   {
    "nombre": "Febrero 2027",
