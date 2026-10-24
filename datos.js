@@ -18,7 +18,7 @@ const DATOS = /*DATOS_INICIO*/{
     {
      "area": "Ingenierías",
      "carreras": [
-      ["Ingeniería en Inteligencia artificial y ciencia de datos", 15, 0, 2, 1],
+      ["Ingeniería en Inteligencia artificial y ciencia de datos", 15, 1, 2, 1],
       ["Ingeniería en Ciencia de datos", 15, 1, 0, 1],
       ["Ingeniería Aeronáutica", 15, 1, 0, 0],
       ["Ingeniería Civil", 15, 2, 1, 0],
