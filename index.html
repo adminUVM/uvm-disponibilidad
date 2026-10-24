@@ -1,528 +1,533 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UVM Admisiones</title>
-   
-  <!-- Animate.css -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>UVM Admisiones · Lugares disponibles</title>
 
-  <!-- Tu CSS personalizado -->
-  <link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    /* ===== COLORES UVM: cambia aquí el rojo si quieres otro tono ===== */
+    --rojo: #d5112b;
+    --rojo-osc: #a30d20;
+    --rojo-claro: #fde8eb;
+
+    --tinta: #1b1416;
+    --papel: #f4f5f7;
+    --blanco: #ffffff;
+    --linea: #e2e4e9;
+    --suave: #646b78;
+
+    --ok-bg: #dff4e6;   --ok-tx: #12612a;
+    --ult-bg: #ffeccb;  --ult-tx: #864f00;
+    --ago-bg: #e9eaee;  --ago-tx: #5d6270;
+
+    --titulos: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+    --cuerpo: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--papel); color: var(--tinta); font-family: var(--cuerpo); font-size: 16px; line-height: 1.5; }
+
+  /* ---------- Encabezado rojo ---------- */
+  .hero {
+    position: relative; overflow: hidden;
+    background: var(--rojo); color: #fff;
+    padding: 26px 20px 96px;
+  }
+  .hero::after {
+    content: "UVM";
+    position: absolute; right: -2vw; bottom: -0.16em;
+    font-family: var(--titulos); font-weight: 800;
+    font-size: clamp(9rem, 28vw, 22rem); line-height: .8; letter-spacing: -0.04em;
+    color: rgba(255,255,255,.09); pointer-events: none; user-select: none;
+  }
+  .hero-in { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; }
+  .logos {
+    display: inline-flex; align-items: center; gap: 16px;
+    background: #fff; border-radius: 14px; padding: 10px 18px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.18);
+  }
+  .logos img { height: 44px; width: auto; display: block; }
+  .logos img + img { border-left: 1px solid var(--linea); padding-left: 16px; }
+
+  .hero h1 {
+    font-family: var(--titulos); font-weight: 800;
+    font-size: clamp(2.4rem, 7vw, 4.6rem); line-height: .98; letter-spacing: -0.03em;
+    margin: 34px 0 12px; max-width: 14ch;
+  }
+  .hero .sub { margin: 0; font-size: 1.1rem; max-width: 46ch; color: #ffe3e7; }
+
+  .ciclo { margin-top: 28px; }
+  .ciclo-etiqueta { display: block; font-weight: 600; margin-bottom: 8px; color: #ffe3e7; }
+  .segmentos { display: inline-flex; flex-wrap: wrap; gap: 8px; }
+  .segmentos button {
+    font: inherit; font-family: var(--titulos); font-weight: 700; font-size: 1.1rem;
+    border: 2px solid rgba(255,255,255,.55); background: transparent; color: #fff;
+    padding: 10px 24px; border-radius: 999px; cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .segmentos button:hover { border-color: #fff; background: rgba(255,255,255,.14); }
+  .segmentos button[aria-pressed="true"] { background: #fff; color: var(--rojo); border-color: #fff; }
+  button:focus-visible, input:focus-visible { outline: 3px solid #1b1416; outline-offset: 2px; }
+  .segmentos button:focus-visible { outline-color: #fff; }
+
+  /* ---------- Contenido ---------- */
+  main { max-width: 1100px; margin: 0 auto; padding: 0 16px 40px; }
+
+  .resumen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: -52px; position: relative; z-index: 2; }
+  .dato { background: var(--blanco); border-radius: 14px; padding: 16px 18px; box-shadow: 0 8px 24px rgba(27,20,22,.12); }
+  .dato b { display: block; font-family: var(--titulos); font-size: 2.4rem; line-height: 1; font-weight: 800; color: var(--rojo); }
+  .dato span { color: var(--suave); font-size: .92rem; }
+
+  .avisos { display: grid; gap: 10px; margin: 22px 0; }
+  .aviso {
+    background: var(--blanco); border-radius: 10px; padding: 13px 18px;
+    box-shadow: inset 6px 0 0 var(--rojo); padding-left: 24px;
+  }
+  .aviso:first-child { background: var(--rojo-claro); }
+  .aviso strong { font-weight: 600; }
+
+  .herramientas { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .buscador { flex: 1 1 260px; }
+  .buscador input {
+    width: 100%; font: inherit; padding: 12px 16px;
+    border: 2px solid var(--linea); border-radius: 12px; background: var(--blanco);
+  }
+  .buscador input:focus { border-color: var(--rojo); }
+  .interruptor { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 500; user-select: none; }
+  .interruptor input { width: 18px; height: 18px; accent-color: var(--rojo); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 18px; }
+  .chip {
+    font: inherit; font-weight: 500; border: 1px solid var(--linea); background: var(--blanco); color: var(--tinta);
+    padding: 7px 15px; border-radius: 999px; cursor: pointer;
+  }
+  .chip:hover { border-color: var(--rojo); }
+  .chip[aria-pressed="true"] { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+
+  /* ---------- Tabla ---------- */
+  .tabla-wrap { background: var(--blanco); border-radius: 14px; overflow: hidden; box-shadow: 0 4px 18px rgba(27,20,22,.08); }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { text-align: left; font-weight: 600; font-size: .88rem; color: var(--suave); padding: 13px 18px; background: #fafafb; border-bottom: 1px solid var(--linea); }
+  thead th.num, td.num { text-align: center; }
+
+  tr.area td {
+    padding: 13px 18px 13px 24px; background: var(--tinta); color: #fff;
+    font-family: var(--titulos); font-weight: 700; font-size: 1.1rem;
+    box-shadow: inset 6px 0 0 var(--rojo);
+  }
+  tbody tr.fila td { padding: 12px 18px; border-top: 1px solid var(--linea); vertical-align: middle; }
+  tbody tr.fila:hover td { background: #fff7f8; }
+  .carrera { font-weight: 600; }
+  .carrera small { display: block; color: var(--suave); font-weight: 400; font-size: .82rem; }
+  tr.fila.sin .carrera { color: #7b8190; }
+
+  .estado { display: inline-flex; align-items: center; gap: 12px; }
+  .estado b {
+    display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px;
+    font-family: var(--titulos); font-size: 1.6rem; font-weight: 800;
+    background: var(--bg); color: var(--tx);
+  }
+  .estado em { font-style: normal; font-weight: 600; font-size: .9rem; color: var(--tx); }
+  .disponible { --bg: var(--ok-bg);  --tx: var(--ok-tx); }
+  .ultimos    { --bg: var(--ult-bg); --tx: var(--ult-tx); }
+  .agotado    { --bg: var(--ago-bg); --tx: var(--ago-tx); }
+
+  .militar { font-family: var(--titulos); font-weight: 700; font-size: 1.25rem; }
+  .militar.cero { color: #b0b6c2; font-weight: 500; }
+
+  .vacio { padding: 36px 16px; text-align: center; color: var(--suave); }
+
+  /* ---------- Video ---------- */
+  .video { margin-top: 30px; }
+  .video summary { cursor: pointer; font-weight: 600; margin-bottom: 12px; }
+  .video video { width: 100%; max-width: 640px; border-radius: 14px; display: block; }
+
+  footer { background: var(--tinta); color: #c9ccd3; text-align: center; font-size: .88rem; padding: 22px 16px 26px; }
+  footer div + div { margin-top: 4px; }
+
+  /* ---------- Celular: cada carrera es una tarjeta ---------- */
+  @media (max-width: 680px) {
+    .hero { padding-bottom: 84px; }
+    .resumen { grid-template-columns: 1fr; margin-top: -44px; gap: 8px; }
+    .dato { display: flex; align-items: baseline; gap: 12px; padding: 12px 16px; }
+    .dato b { font-size: 1.8rem; }
+    thead { display: none; }
+    table, tbody, tr.area, tr.fila, tr.area td { display: block; }
+    tbody tr.fila { padding: 12px 16px; border-top: 1px solid var(--linea); }
+    tbody tr.fila td { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border: 0; }
+    tbody tr.fila:hover td { background: none; }
+    tbody tr.fila td::before { content: attr(data-label); color: var(--suave); font-size: .88rem; }
+    tbody tr.fila td.carrera { display: block; padding-bottom: 8px; }
+    tbody tr.fila td.carrera::before { content: none; }
+    td.num { text-align: right; }
+  }
+  @media print {
+    .hero { background: none; color: #000; padding-bottom: 20px; }
+    .hero::after, .herramientas, .chips, .video { display: none; }
+  }
+</style>
 </head>
+
 <body>
 
-  <header class="animate__animated animate__fadeInDown">
-   <h1>Bienvenido a UVM</h1>
-  <img src="imagenes/Logo UVM.jpeg" alt="" width="200" />
- </header>
-	
- <section class="animate__animated animate__zoomIn">
-    <video width="640" controls autoplay muted>
-      <source src="videos/ranking-2025.mp4" type="video/mp4">
-    </video>
-  </section>
-	  
- <img src= "imagenes/descarga (1).png" alt="Logo UVM" width="150">
-  <center>
-<div style="width:100%">
- <p style="font-family: Constantia, serif; font-size:20px; ">Los datos pertenecen EXCLUSIVAMENTE a UVM </p>
+<!-- =====================================================================
+     ZONA DE EDICIÓN  ·  Aquí cambias todo lo que se ve en la página
+     ===================================================================== -->
+<script>
+/* 1) TEXTOS Y LOGOS */
+const TITULO = "Aparta tu lugar en UVM";
+const ACTUALIZADO = "24 de octubre de 2026";   // fecha de última actualización ("" para ocultarla)
+const LOGOS = [                                  // cambia aquí los archivos de logo (rojos, etc.)
+  "imagenes/Logo UVM.jpeg",
+  "imagenes/descarga (1).png"
+];
+const AVISOS = [
+  "<strong>Promociones y descuentos exclusivos</strong> para el turno matutino.",
+  "Si se aparta lugar o hay promesa de pago, el alumno tiene <strong>una semana</strong> para liquidar o generar el pago acordado."
+];
+const MOSTRAR_VIDEO = true;                      // true / false
+
+/* 2) CICLO QUE SE ABRE PRIMERO (debe coincidir con el "nombre" de uno de los bloques de abajo) */
+const CICLO_INICIAL = "Agosto 2027";
+
+/* 3) LUGARES POR CICLO
+   Cada bloque { nombre: "...", areas: [...] } es UN ciclo y aparece como botón en la página.
+   - Para cambiar el año:      cambia el texto de "nombre" (ej. "Febrero 2028") y actualiza los números.
+   - Para agregar otro ciclo:  copia un bloque completo, pégalo debajo y cámbiale el "nombre".
+   - Para quitar un ciclo:     borra su bloque completo.
+   Cada carrera es UNA línea:  ["Carrera", alumnos por grupo, disponibles, SEDENA, SEMAR]  */
+const CICLOS = [
+
+  /* ################  CICLO 1: FEBRERO 2027  ################ */
+  { nombre: "Febrero 2027", areas: [
+    { area: "Ingenierías", carreras: [
+      ["Ingeniería en Inteligencia artificial y ciencia de datos", 25, 0, 2, 1],
+      ["Ingeniería en Ciencia de datos", 25, 1, 0, 1],
+      ["Ingeniería Aeronáutica", 25, 1, 0, 0],
+      ["Ingeniería Civil", 25, 2, 1, 0],
+      ["Ingeniería Robótica", 25, 1, 3, 1],
+      ["Ingeniería Electrónica", 25, 2, 1, 3],
+      ["Ingeniería Matemáticas", 25, 2, 0, 2],
+      ["Ingeniería en Energía y desarrollo sostenible", 25, 2, 1, 0],
+      ["Ingeniería Física", 25, 1, 1, 0],
+      ["Ingeniería en Animación e interactividad", 25, 1, 1, 1],
+      ["Ingeniería Mecatrónica con enfoque automotriz", 25, 1, 0, 1],
+      ["Ingeniería Mecatrónica", 25, 0, 0, 0],
+      ["Ingeniería Industrial y de sistemas", 25, 2, 0, 1],
+      ["Ingeniería Mecánica industrial", 25, 1, 0, 0],
+      ["Ingeniería en Sistemas computacionales", 25, 2, 0, 1],
+      ["Ingeniería en Desarrollo de videojuegos", 25, 1, 0, 0],
+    ]},
+    { area: "Gastronomía y turismo", carreras: [
+      ["Gastronomía internacional", 30, 1, 2, 1],
+      ["Administración turística y hotelera", 25, 2, 1, 1],
+    ]},
+    { area: "Sociales", carreras: [
+      ["Comunicación y medios digitales", 25, 2, 0, 1],
+      ["Entretenimiento y Producción Musical", 25, 2, 0, 1],
+      ["Criminología con enfoque en criminalística", 25, 0, 2, 1],
+      ["Criminología", 25, 0, 2, 1],
+      ["Pedagogía", 25, 1, 0, 1],
+      ["Derecho", 25, 1, 1, 1],
+      ["Relaciones internacionales", 25, 0, 0, 1],
+      ["Lenguas extranjeras", 25, 2, 2, 1],
+    ]},
+    { area: "Diseño y arquitectura", carreras: [
+      ["Arquitectura", 25, 1, 0, 1],
+      ["Arquitectura con enfoque sostenible", 25, 1, 0, 1],
+      ["Diseño y comunicación gráfica", 25, 1, 2, 1],
+      ["Diseño multimedia", 25, 2, 2, 1],
+      ["Diseño de interiores", 25, 2, 2, 1],
+      ["Diseño de experiencias e interfaces", 25, 2, 2, 1],
+      ["Diseño de la moda e industria del vestido", 25, 2, 0, 0],
+      ["Diseño industrial", 25, 0, 2, 1],
+    ]},
+    { area: "Negocios", carreras: [
+      ["Actuaría", 25, 1, 0, 1],
+      ["Administración agropecuaria", 25, 0, 2, 1],
+      ["Administración de empresas", 25, 0, 2, 1],
+      ["Administración de negocios internacionales", 25, 1, 0, 1],
+      ["Comercio y logística internacional", 25, 2, 2, 1],
+      ["Contaduría pública y finanzas", 25, 3, 2, 1],
+      ["Finanzas y banca", 25, 0, 2, 1],
+      ["Mercadotecnia", 25, 1, 2, 1],
+      ["Mercadotecnia y publicidad en entornos digitales", 25, 1, 2, 1],
+      ["Mercadotecnia deportiva internacional", 25, 1, 2, 1],
+    ]},
+    { area: "Salud", carreras: [
+      ["Bioquímica", 25, 2, 0, 1],
+      ["Biotecnología", 25, 1, 0, 1],
+      ["Química", 25, 1, 0, 1],
+      ["Biología", 25, 1, 0, 1],
+      ["Cultura física y deporte", 25, 1, 0, 1],
+      ["Enfermería", 25, 1, 1, 1],
+      ["Fisioterapia", 25, 1, 0, 1],
+      ["Medicina", 25, 1, 0, 0],
+      ["Medicina veterinaria y zootecnia", 25, 2, 0, 1],
+      ["Nutrición", 25, 0, 2, 1],
+      ["Psicología", 25, 1, 1, 1],
+      ["Químico farmacéutico biotecnólogo", 25, 0, 0, 1],
+    ]},
+  ]},
+
+  /* ################  CICLO 2: AGOSTO 2027  ################ */
+  { nombre: "Agosto 2027", areas: [
+    { area: "Ingenierías", carreras: [
+      ["Ingeniería en Inteligencia artificial y ciencia de datos", 25, 0, 2, 1],
+      ["Ingeniería en Ciencia de datos", 25, 1, 0, 1],
+      ["Ingeniería Aeronáutica", 25, 1, 0, 0],
+      ["Ingeniería Civil", 25, 2, 1, 0],
+      ["Ingeniería Robótica", 25, 1, 3, 1],
+      ["Ingeniería Electrónica", 25, 2, 1, 3],
+      ["Ingeniería Matemáticas", 25, 2, 0, 2],
+      ["Ingeniería en Energía y desarrollo sostenible", 25, 2, 1, 0],
+      ["Ingeniería Física", 25, 1, 1, 0],
+      ["Ingeniería en Animación e interactividad", 25, 1, 1, 1],
+      ["Ingeniería Mecatrónica con enfoque automotriz", 25, 1, 0, 1],
+      ["Ingeniería Mecatrónica", 25, 0, 0, 0],
+      ["Ingeniería Industrial y de sistemas", 25, 2, 0, 1],
+      ["Ingeniería Mecánica industrial", 25, 1, 0, 0],
+      ["Ingeniería en Sistemas computacionales", 25, 2, 0, 1],
+      ["Ingeniería en Desarrollo de videojuegos", 25, 1, 0, 0],
+    ]},
+    { area: "Gastronomía y turismo", carreras: [
+      ["Gastronomía internacional", 30, 1, 2, 1],
+      ["Administración turística y hotelera", 25, 2, 1, 1],
+    ]},
+    { area: "Sociales", carreras: [
+      ["Comunicación y medios digitales", 25, 2, 0, 1],
+      ["Entretenimiento y Producción Musical", 25, 2, 0, 1],
+      ["Criminología con enfoque en criminalística", 25, 0, 2, 1],
+      ["Criminología", 25, 0, 2, 1],
+      ["Pedagogía", 25, 1, 0, 1],
+      ["Derecho", 25, 1, 1, 1],
+      ["Relaciones internacionales", 25, 0, 0, 1],
+      ["Lenguas extranjeras", 25, 2, 2, 1],
+    ]},
+    { area: "Diseño y arquitectura", carreras: [
+      ["Arquitectura", 25, 1, 0, 1],
+      ["Arquitectura con enfoque sostenible", 25, 1, 0, 1],
+      ["Diseño y comunicación gráfica", 25, 1, 2, 1],
+      ["Diseño multimedia", 25, 2, 2, 1],
+      ["Diseño de interiores", 25, 2, 2, 1],
+      ["Diseño de experiencias e interfaces", 25, 2, 2, 1],
+      ["Diseño de la moda e industria del vestido", 25, 2, 0, 0],
+      ["Diseño industrial", 25, 0, 2, 1],
+    ]},
+    { area: "Negocios", carreras: [
+      ["Actuaría", 25, 1, 0, 1],
+      ["Administración agropecuaria", 25, 0, 2, 1],
+      ["Administración de empresas", 25, 0, 2, 1],
+      ["Administración de negocios internacionales", 25, 1, 0, 1],
+      ["Comercio y logística internacional", 25, 2, 2, 1],
+      ["Contaduría pública y finanzas", 25, 3, 2, 1],
+      ["Finanzas y banca", 25, 0, 2, 1],
+      ["Mercadotecnia", 25, 1, 2, 1],
+      ["Mercadotecnia y publicidad en entornos digitales", 25, 1, 2, 1],
+      ["Mercadotecnia deportiva internacional", 25, 1, 2, 1],
+    ]},
+    { area: "Salud", carreras: [
+      ["Bioquímica", 25, 2, 0, 1],
+      ["Biotecnología", 25, 1, 0, 1],
+      ["Química", 25, 1, 0, 1],
+      ["Biología", 25, 1, 0, 1],
+      ["Cultura física y deporte", 25, 1, 0, 1],
+      ["Enfermería", 25, 1, 1, 1],
+      ["Fisioterapia", 25, 1, 0, 1],
+      ["Medicina", 25, 1, 0, 0],
+      ["Medicina veterinaria y zootecnia", 25, 2, 0, 1],
+      ["Nutrición", 25, 0, 2, 1],
+      ["Psicología", 25, 1, 1, 1],
+      ["Químico farmacéutico biotecnólogo", 25, 0, 0, 1],
+    ]},
+  ]},
+
+];
+</script>
+<!-- ===================== FIN DE LA ZONA DE EDICIÓN ===================== -->
+
+
+<header class="hero">
+  <div class="hero-in">
+    <div class="logos" id="logos"></div>
+    <h1 id="titulo"></h1>
+    <p class="sub" id="subtitulo"></p>
+    <div class="ciclo">
+      <span class="ciclo-etiqueta">Elige el ciclo de ingreso</span>
+      <div class="segmentos" id="segmentos" role="group" aria-label="Ciclo de ingreso"></div>
+    </div>
   </div>
-  </center>
+</header>
 
-<body>
-<tr>
-<p style="font-family: Constantia, serif; font-size:15px; ">OBSERVACION: Promociones y descuentos exclusivos  para el turno matutino </p>
-<tr>
-<p style="font-family: Constantia, serif; font-size:15px; ">En caso de apartar lugar o con promesa de pago el alumno tendra una semana para liquidar o generar el pago acordado</p>
-</tr>
-</body>
-
-	<section class="animate__animated animate__fadeInUp">
-    <h2>Carreras y Lugares Disponibles</h2>
-    <table>
-      <tr>
-        <th>Carrera</th>
-        <!--<th>Grupos</th>-->
-        <th>Alumnos/Grupo</th>
-        <th>Lugares Disponibles</th>
-        <th>Lugares SEDENA</th>
-        <th>Lugares SEMAR</th>
-      </tr>
-      <tr>
-	<th colspan="6" style="text-align:center;color:#0077cc;">INGENIERIAS</th>
-      </tr>
-      <tr>
-        <td>Ingeniería en Inteligencia artificial y ciencia de datos</td>
-        <!--<td>3</td>-->
-        <td>25</td>
-        <td>0</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	<tr>
-        <td>Ingeniería en Ciencia de datos </td>
-        <!--<td>4</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-      <tr>
-		  <td>Ingeniería Aeronautica </td>
-         <!--<td>4</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-       <tr>
-        <td>Ingeniería Civil</td>
-        <!--<td>4</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>1</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>Ingeniería Robótica</td>
-         <!--<td>4</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>3</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>Ingeniería Electrónica</td>
-         <!--<td>4</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>1</td>
-        <td>3</td>
-      </tr>
-       <tr>
-        <td>Ingeniería Matemáticas</td>
-        <!--<td>3</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>0</td>
-        <td>2</td>
-      </tr>
-	    <tr>
-        <td>Ingeniería En energía y desarrollo sostenible</td>
-         <!--<td>2</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>1</td>
-        <td>0</td>
-      </tr>
-	<tr>
-        <td>Ingeniería Física</td>
-         <!--<td>2</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>1</td>
-        <td>0</td>
-      </tr>
-	    <tr>
-        <td>Ingeniería en animación e interactividad </td>
-         <!--<td>4</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Ingeniería Mecatrónica con enfoque automotriz </td>
-         <!--<td>3</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-	     <tr>
-        <td>Ingeniería Mecatrónica </td>
-         <!--<td>4</td>-->
-        <td>25</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-	    <tr>
-        <td>Ingeniería Industrial y de sistemas  </td>
-         <!--<td>3</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Ingeniería Mecánica industrial </td>
-         <!--<td>4</td>-->
-       <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-	    <tr>
-        <td>Ingeniería en sistemas computacionales </td>
-         <!--<td>4</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Ingeniería en desarrollo de videojuegos </td>
-         <!--<td>4</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-       <tr>
-	<th colspan="6" style="text-align:center;color:#FF6347;">GASTRONOMIA Y TURISMO</th>
-      </tr>
-	  <tr>
-        <td>Gastronomía internacional </td>
-         <!--<td>6</td>-->
-        <td>30</td>
-        <td>1</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Administración turística y hotelera</td>
-         <!--<td>5</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>1</td>
-        <td>1</td>
-      </tr>
-	<tr>
-	<th colspan="6" style="text-align:center;color:#FF8C00;">SOCIALES</th>
-      </tr>
-	     <tr>
-        <td>Comunicación y medios digitales</td>
-         <!--<td>4</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-	     <tr>
-			   <td>Entretenimiento y Produccón Musical</td>
-         <!--<td>4</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-	     <tr>
-			 <td>Criminología con enfoque en criminalistica</td>
-        <!--<td>3</td>-->
-        <td>25</td>
-        <td>0</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Criminología</td>
-        <!--<td>3</td>-->
-        <td>25</td>
-        <td>0</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Pedagogía</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Derecho</td>
-        <!--<td>4</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Relaciones internacionales</td>
-        <!--<td>3</td>-->
-        <td>25</td>
-        <td>0</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-
-	    <tr>
-        <td>Lenguas extranjeras</td>
-        <!--<td>3</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-	<th colspan="6" style="text-align:center;color:#4682B4;">DISEÑO Y ARQUITECTURA</th>
-      </tr>
-	<tr>
-        <td>Arquitectura</td>
-        <!--<td>3</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-			<td>Arquitectura con enfoque sostenible</td>
-        <!--<td>3</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Diseño y comunicación grafica</td>
-        <!--<td>4</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Diseño multimedia</td>
-        <!--<td>4</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Diseño de interiores</td>
-        <!--<td>4</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	     <tr>
-			 <td>Diseño de experiencias e interfaces</td>
-        <!--<td>4</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	     <tr>
-        <td>Diseño de la moda e industria del vestido</td>
-        <!--<td>5</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>0</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>Diseño industrial</td>
-        <!--<td>4</td>-->
-        <td>25</td>
-        <td>0</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-      <tr>
-	<th colspan="6" style="text-align:center;color:#800080;">NEGOCIOS</th>
-      </tr>
-	    <tr>
-        <td>Actuaria</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-	     <tr>
-			 <td>Administración Agropecuaria</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>0</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	     <tr>
-        <td>Administración de empresas</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>0</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	     <tr>
-        <td>Administración de negocios internacionales</td>
-        <!--<td>4</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Comercio y logística internacional</td>
-        <!--<td>4</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Contaduría publica y finanzas</td>
-        <!--<td>4</td>-->
-        <td>25</td>
-        <td>3</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Finanzas y banca</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>0</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Mercadotecnia</td>
-        <!--<td>3</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Mercadotecnia y publicidad en entornos digitales</td>
-        <!--<td>4</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	    <tr>
-        <td>Mercadotecnia deportiva internacional</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>2</td>
-        <td>1</td>
-      </tr>
-	     <tr>
-	<th colspan="6" style="text-align:center;color:#FF6347;">SALUD</th>
-      </tr>
-	     <tr>
-        <td>Bioquímica</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>0</td>
-        <td>1</td>
-	</tr>
-	    <tr>
-        <td>Biotecnología</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-	</tr>
-	    <tr>
-        <td>Química</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-	</tr>
-	      <tr>
-        <td>Biología</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-	</tr>
-	    <tr>
-        <td>Cultura Física y Deporte</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-	</tr>
-	    <tr>
-        <td>Enfermería</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-	</tr>
-	    <tr>
-        <td>Fisioterapia</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-	</tr>
-	    <tr>
-        <td>Medicina</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>0</td>
-        <td>0</td>
-	</tr>
-	     <tr>
-        <td>Medicina Veterinaria y Zootecnia</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>2</td>
-        <td>0</td>
-        <td>1</td>
-	</tr>
-	    <tr>
-        <td>Nutrición</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>0</td>
-        <td>2</td>
-        <td>1</td>
-	</tr>
-	    <tr>
-        <td>Psicología</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-	</tr>
-	    <tr>
-        <td>Químico Farmacéutico Biotecnólogo</td>
-        <!--<td>2</td>-->
-        <td>25</td>
-        <td>0</td>
-        <td>0</td>
-        <td>1</td>
-	</tr>
-    </table>
+<main>
+  <section class="resumen" aria-label="Resumen">
+    <div class="dato"><b id="r-lugares">0</b><span>lugares disponibles</span></div>
+    <div class="dato"><b id="r-carreras">0</b><span>carreras con lugar</span></div>
+    <div class="dato"><b id="r-agotadas">0</b><span>carreras agotadas</span></div>
   </section>
 
-  <footer class="animate__animated animate__fadeInUp">
-    <p>&copy; 2025 Universidad del Valle de México</p>
-  </footer>
+  <section class="avisos" id="avisos" aria-label="Avisos"></section>
+
+  <div class="herramientas">
+    <div class="buscador">
+      <input id="buscar" type="search" placeholder="Busca tu carrera…" aria-label="Buscar carrera" autocomplete="off" />
+    </div>
+    <label class="interruptor"><input type="checkbox" id="solo" /> Solo con lugares</label>
+  </div>
+  <div class="chips" id="chips" role="group" aria-label="Filtrar por área"></div>
+
+  <div class="tabla-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Carrera</th>
+          <th>Lugares disponibles</th>
+          <th class="num">SEDENA</th>
+          <th class="num">SEMAR</th>
+        </tr>
+      </thead>
+      <tbody id="cuerpo"></tbody>
+    </table>
+    <div class="vacio" id="vacio" hidden>No hay carreras con ese filtro. Prueba con otra búsqueda o área.</div>
+  </div>
+
+  <details class="video" id="video" open>
+    <summary>UVM en los rankings 2025</summary>
+    <video controls muted playsinline preload="metadata">
+      <source src="videos/ranking-2025.mp4" type="video/mp4" />
+    </video>
+  </details>
+</main>
+
+<footer>
+  <div id="pie-actualizado"></div>
+  <div>&copy; <span id="anio"></span> Universidad del Valle de México. Los datos pertenecen exclusivamente a UVM.</div>
+</footer>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var normalizar = function (s) { return s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); };
+  var escapar = function (s) {
+    return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
+  };
+  var nivel = function (n) {
+    if (n <= 0) return { clase: "agotado", texto: "Agotado" };
+    if (n <= 2) return { clase: "ultimos", texto: "Últimos lugares" };
+    return { clase: "disponible", texto: "Disponible" };
+  };
+
+  var inicial = CICLOS.filter(function (c) { return c.nombre === CICLO_INICIAL; })[0] || CICLOS[0];
+  var estado = { ciclo: inicial.nombre, area: "Todas", texto: "", solo: false };
+
+  function cicloActual() {
+    return CICLOS.filter(function (c) { return c.nombre === estado.ciclo; })[0] || CICLOS[0];
+  }
+
+  /* ---- Partes fijas ---- */
+  $("titulo").textContent = TITULO;
+  $("logos").innerHTML = LOGOS.map(function (src) { return '<img src="' + escapar(src) + '" alt="UVM" />'; }).join("");
+  if (!LOGOS.length) $("logos").remove();
+  $("avisos").innerHTML = AVISOS.map(function (a) { return '<div class="aviso">' + a + "</div>"; }).join("");
+  $("pie-actualizado").textContent = ACTUALIZADO ? "Última actualización: " + ACTUALIZADO : "";
+  $("anio").textContent = new Date().getFullYear();
+  if (!MOSTRAR_VIDEO) $("video").remove();
+
+  /* ---- Botones de ciclo ---- */
+  function pintarCiclos() {
+    var cont = $("segmentos");
+    cont.innerHTML = "";
+    CICLOS.forEach(function (c) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = c.nombre;
+      b.setAttribute("aria-pressed", c.nombre === estado.ciclo ? "true" : "false");
+      b.onclick = function () {
+        estado.ciclo = c.nombre;
+        var existe = c.areas.some(function (a) { return a.area === estado.area; });
+        if (!existe) estado.area = "Todas";
+        pintarTodo();
+      };
+      cont.appendChild(b);
+    });
+    $("subtitulo").textContent = "Consulta la disponibilidad de tu carrera para el ciclo " + estado.ciclo + ".";
+    document.title = "UVM Admisiones · " + estado.ciclo;
+  }
+
+  /* ---- Resumen del ciclo ---- */
+  function pintarResumen() {
+    var total = 0, con = 0, ago = 0;
+    cicloActual().areas.forEach(function (a) {
+      a.carreras.forEach(function (c) {
+        total += c[2];
+        if (c[2] > 0) con++; else ago++;
+      });
+    });
+    $("r-lugares").textContent = total;
+    $("r-carreras").textContent = con;
+    $("r-agotadas").textContent = ago;
+  }
+
+  /* ---- Chips de área ---- */
+  function pintarChips() {
+    var cont = $("chips");
+    cont.innerHTML = "";
+    ["Todas"].concat(cicloActual().areas.map(function (a) { return a.area; })).forEach(function (n) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.textContent = n;
+      b.setAttribute("aria-pressed", n === estado.area ? "true" : "false");
+      b.onclick = function () { estado.area = n; pintarChips(); pintarTabla(); };
+      cont.appendChild(b);
+    });
+  }
+
+  /* ---- Tabla ---- */
+  function pintarTabla() {
+    var q = normalizar(estado.texto.trim());
+    var html = "", visibles = 0;
+
+    cicloActual().areas.forEach(function (a) {
+      if (estado.area !== "Todas" && estado.area !== a.area) return;
+      var filas = a.carreras.filter(function (c) {
+        if (estado.solo && c[2] <= 0) return false;
+        return !q || normalizar(c[0]).indexOf(q) !== -1;
+      });
+      if (!filas.length) return;
+
+      html += '<tr class="area"><td colspan="4">' + escapar(a.area) + "</td></tr>";
+      filas.forEach(function (c) {
+        var n = nivel(c[2]);
+        visibles++;
+        html +=
+          '<tr class="fila' + (c[2] <= 0 ? " sin" : "") + '">' +
+          '<td class="carrera">' + escapar(c[0]) + "<small>" + c[1] + " alumnos por grupo</small></td>" +
+          '<td class="' + n.clase + '" data-label="Lugares disponibles"><span class="estado"><b>' + c[2] + "</b><em>" + n.texto + "</em></span></td>" +
+          '<td class="num" data-label="SEDENA"><span class="militar' + (c[3] ? "" : " cero") + '">' + c[3] + "</span></td>" +
+          '<td class="num" data-label="SEMAR"><span class="militar' + (c[4] ? "" : " cero") + '">' + c[4] + "</span></td>" +
+          "</tr>";
+      });
+    });
+
+    $("cuerpo").innerHTML = html;
+    $("vacio").hidden = visibles > 0;
+  }
+
+  function pintarTodo() { pintarCiclos(); pintarResumen(); pintarChips(); pintarTabla(); }
+
+  $("buscar").addEventListener("input", function (e) { estado.texto = e.target.value; pintarTabla(); });
+  $("solo").addEventListener("change", function (e) { estado.solo = e.target.checked; pintarTabla(); });
+
+  pintarTodo();
+})();
+</script>
 
 </body>
 </html>
