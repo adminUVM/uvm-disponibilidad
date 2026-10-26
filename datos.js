@@ -1,7 +1,7 @@
 /* Archivo generado por el panel de administración (admin.html). No lo edites a mano. */
 const DATOS = /*DATOS_INICIO*/{
  "titulo": "Aparta tu lugar en UVM",
- "actualizado": "24 de octubre de 2026",
+ "actualizado": "26 de octubre de 2026",
  "logos": [
   "imagenes/descarga-1-.png"
  ],
@@ -52,7 +52,7 @@ const DATOS = /*DATOS_INICIO*/{
       ["Criminología", 15, 0, 2, 1],
       ["Pedagogía", 15, 1, 0, 1],
       ["Derecho", 15, 1, 1, 1],
-      ["Relaciones internacionales", 15, 0, 0, 1],
+      ["Relaciones internacionales", 15, 1, 0, 1],
       ["Lenguas extranjeras", 15, 2, 2, 1]
      ]
     },
