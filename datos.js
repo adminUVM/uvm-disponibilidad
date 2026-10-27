@@ -40,7 +40,7 @@ const DATOS = /*DATOS_INICIO*/{
      "area": "Gastronomía y turismo",
      "carreras": [
       ["Gastronomía internacional", 25, 1, 2, 1],
-      ["Administración turística y hotelera", 15, 2, 1, 1]
+      ["Administración turística y hotelera", 15, 1, 1, 1]
      ]
     },
     {
