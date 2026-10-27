@@ -1,7 +1,7 @@
 /* Archivo generado por el panel de administración (admin.html). No lo edites a mano. */
 const DATOS = /*DATOS_INICIO*/{
  "titulo": "Aparta tu lugar en UVM",
- "actualizado": "26 de octubre de 2026",
+ "actualizado": "27 de octubre de 2026",
  "logos": [
   "imagenes/descarga-1-.png"
  ],
@@ -131,7 +131,7 @@ const DATOS = /*DATOS_INICIO*/{
      "area": "Gastronomía y turismo",
      "carreras": [
       ["Gastronomía internacional", 30, 1, 2, 1],
-      ["Administración turística y hotelera", 25, 2, 1, 1]
+      ["Administración turística y hotelera", 25, 1, 1, 1]
      ]
     },
     {
