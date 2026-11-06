@@ -99,7 +99,7 @@ const DATOS = /*DATOS_INICIO*/{
       ["Nutrición", 15, 0, 2, 1],
       ["Psicología", 15, 1, 1, 1],
       ["Químico farmacéutico biotecnólogo", 15, 0, 0, 1],
-      ["Ingeniería Biomedica", 25, 0, 0, 0]
+      ["Ingeniería Biomedica", 15, 0, 0, 0]
      ]
     }
    ]
