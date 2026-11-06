@@ -1,7 +1,7 @@
 /* Archivo generado por el panel de administración (admin.html). No lo edites a mano. */
 const DATOS = /*DATOS_INICIO*/{
  "titulo": "Aparta tu lugar en UVM",
- "actualizado": "27 de octubre de 2026",
+ "actualizado": "6 de noviembre de 2026",
  "logos": [
   "imagenes/descarga-1-.png"
  ],
@@ -98,7 +98,8 @@ const DATOS = /*DATOS_INICIO*/{
       ["Medicina veterinaria y zootecnia", 15, 2, 0, 1],
       ["Nutrición", 15, 0, 2, 1],
       ["Psicología", 15, 1, 1, 1],
-      ["Químico farmacéutico biotecnólogo", 15, 0, 0, 1]
+      ["Químico farmacéutico biotecnólogo", 15, 0, 0, 1],
+      ["Ingeniería Biomedica", 25, 0, 0, 0]
      ]
     }
    ]
